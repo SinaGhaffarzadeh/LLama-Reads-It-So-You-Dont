@@ -1,0 +1,62 @@
+Here i'm going to talk about RAG model sub-instruction.
+
+- Databases for training LLM models ===> Hotpot QA - Fever
+
+- There are two issues that we should consider about them before of chosing LLM;
+1- context lenght
+   each llm has different context lenght that should be considered before using them in our agent
+2- knowlege of cutoff 
+   each model tuned with new data untill a particular time. for example October 2023. Therfore, it will answer our question utill that time.
+
+
+- Chunking Strategies 
+We have 5 chunking method for RAG;
+1- fixed-size chunking with an overlap between each chunk.
+2- Sementic chunking
+3- Recursice chunking
+4- Document structure-based chunking
+5- LLM-based chunking
+
+Sementic chunking ==> 1- fixed-size
+                         For example, each chunk is set on 3 sentences
+                      2- thresholding method
+                      3- clustering method
+                         all sentences will be embedded to vectore space then clustering method will apply on them
+
+
+- Embedding method
+For Embedding, we can use other type of Bert models. because simple Bert developed for predicting the next token of input tokens and it does't 
+fine-tuned on extracting main/general meaning of input.
+
+SBert or Sementic Bert/ Sentence Bert is the one of models used for embedding. it published in 2019.
+This models has been fine-tuned on below 3 tasks;
+1- NL inference
+2- Sentence Text Similarity
+3- Triplet Dataset
+
+All three issues feed to the Bert and by calsulating mean pooling of bert output they feed into a classifire that return similarity of input.
+
+NL inference.
+It has 3 output values. First value indicate how much it has similarity between inputs. The second value indicates how much they are neutral across each other.
+The third value indicates how much it has dissimilarity.
+
+Sentence Text Similarity.
+Simple Bert + Pooling + Cosin Similarity 
+
+Triplet Dataset.
+It uses Triplet Loss for clustering.
+
+
+- Indexing method.
+Making limitation in searching to reduce our cost of compiutation.
+
+1- "Product Quantization for nearest neighbor search" article
+In this technique we will devide each vectors into chunks then by applying k-means on them we will be able to found each clusters.
+
+2- "Mapping our vector into low dimantion space by hashing" article
+similarty search in high dimentions via hashing
+
+
+- Query.
+For having suitable query, when an audience asked a question, perhapse it will have miss-spelling in its question sentence. This mistake/flaw will make 
+our retrival searching goes wrong. To evoide from this mistake, we can use LLM to extend input prompt and rewite good prompt to feed it into the main model
